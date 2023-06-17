@@ -1,3 +1,6 @@
+/* Question:- Wap to add two integer without using + operator or unary operator
+Solution:- */
+ 
 public class AdditionProgramWithoutArithmaticOperator
 {
 	public int gerResult(int num1,int num2)
