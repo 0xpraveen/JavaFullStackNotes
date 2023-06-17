@@ -13,7 +13,7 @@ public class LocalVariableExample
 	{
 		LocalVariableExample lve = new LocalVariableExample();
 			lve.msg("Praveen");// method msg in class LocalVariableExample cannot be applied to given types;
-                        			//lve.msg("Nirbhay");
+                        			//lve.msg("Praveen");
                            				^
   						//required: no arguments
   						//found: String
