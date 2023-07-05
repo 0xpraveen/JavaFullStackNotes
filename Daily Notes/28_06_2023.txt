@@ -1,0 +1,835 @@
+============================================================================
+index.html
+-------------
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Home</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        
+        <style>
+            /*Internal style Sheet*/
+          a
+          {
+              color:white;
+          }
+        </style>
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-light" style="background-color:#5e5ee2;;">
+            <a class="navbar-brand" href="#" style=" color:white;">EMS</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#" style=" color:white;" target="contentarea">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="SignUp.html" style=" color:white;" target="contentarea">SignUp</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style=" color:white;">
+                            Employees
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="#" target="contentarea">Add Employee</a>
+                            <a class="dropdown-item" href="#" target="contentarea">Update Employee</a>
+                            <a class="dropdown-item" href="#" target="contentarea">Delete Employee</a>
+                                <div class="dropdown-divider"></div>
+                           <a class="dropdown-item" href="#" target="contentarea">View Employee</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="LoginForm.html" style=" color:white;" target="contentarea">Login</a>
+                    </li>
+                </ul>
+                <form class="form-inline my-2 my-lg-0">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit" style=" color:white;">Search</button>
+                </form>
+            </div>
+        </nav>
+        <iframe name="contentarea" style="height: 600px; width: 100%;"></iframe>
+    </body>
+</html>
+
+
+SignUp.html
+---------------
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>SignUp</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <style>
+            /* form is a id name here */
+            form
+            {
+                margin-left: 25%;
+                margin-right: 25%;
+                margin-top: 2%;
+                box-shadow: 1px 1px 5px 5px #9e9cd3;;
+                padding: 20px;
+            }
+        </style>
+    </head>
+    <body>
+        <form action="#" method="post">
+            <center><h4>Sign Up Form</h4></center>
+            <div class="form-group">
+                <label for="exampleInputEmail1">User Name</label>
+                <input type="text" name="username" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputEmail1">Email address</label>
+                <input type="email" name="useremail" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">Password</label>
+                <input type="password" name="userpassword" class="form-control" id="exampleInputPassword1" placeholder="Password">
+            </div>
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                <label class="form-check-label" for="exampleCheck1">Check me out</label>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </body>
+</html>
+------------------------------------------------------
+Design Login Form and attach with in navbar
+---------------------------------------------
+Time :10 min
+==============================================
+
+There are two types of method:
+Get
+Post
+
+method="get"
+method="post"
+
+http://localhost:8080/MyFirstWebApplication/SignUp.html?username=Purushottam+Kumar&useremail=Purushottam%40gmail.com&userpassword=111111
+
+====================================================================================
+
+LoginForm.html
+-----------------
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+           <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <style>
+            /* form is a id name here */
+            form
+            {
+                margin-left: 25%;
+                margin-right: 25%;
+                margin-top: 2%;
+                box-shadow: 1px 1px 5px 5px #9e9cd3;;
+                padding: 20px;
+            }
+        </style>
+    </head>
+    <body>
+        <form>
+            <center><h4>Login Form</h4></center>
+            <div class="form-group">
+                <label for="exampleInputEmail1">User Email</label>
+                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">Password</label>
+                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+            </div>
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                <label class="form-check-label" for="exampleCheck1">Check me out</label>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </body>
+</html>
+
+
+===========================================================================================================
+<script>
+void fun()
+{
+
+}
+function add()
+{
+
+}
+
+
+</script>
+
+=============================================================================================================
+JavaScript
+--------------
+What is JavaScript
+JavaScript (js) is a light-weight object-oriented programming language which is used by several websites for scripting the webpages. It is an interpreted, full-fledged programming language that enables dynamic interactivity on websites when applied to an HTML document. It was introduced in the year 1995 for adding programs to the webpages in the Netscape Navigator browser. Since then, it has been adopted by all other graphical web browsers. With JavaScript, users can build modern web applications to interact directly without reloading the page every time. The traditional website uses js to provide several forms of interactivity and simplicity.
+
+
+Although, JavaScript has no connectivity with Java programming language. The name was suggested and provided in the times when Java was gaining popularity in the market. In addition to web browsers, databases such as CouchDB and MongoDB uses JavaScript as their scripting and query language.
+
+Features of JavaScript
+===============================================
+There are following features of JavaScript:
+-----------------------------------------------
+1. All popular web browsers support JavaScript as they provide built-in execution environments.
+2. JavaScript follows the syntax and structure of the C programming language. Thus, it is a structured 
+   programming language.
+3. JavaScript is a weakly typed language, where certain types are implicitly cast (depending on the 
+   operation).
+4. JavaScript is an object-oriented programming language that uses prototypes rather than using classes for 
+   inheritance.
+5. It is a light-weighted and interpreted language.
+6. It is a case-sensitive language.
+7. JavaScript is supportable in several operating systems including, Windows, macOS, etc.
+8. It provides good control to the users over the web browsers.
+=============================================================================================================
+Application of JavaScript
+======================================================================
+JavaScript is used to create interactive websites. It is mainly used for:
+--------------------------------------------------------------------------
+* Client-side validation,
+* Dynamic drop-down menus,
+* Displaying date and time,
+* Displaying pop-up windows and dialog boxes (like an alert dialog box, confirm dialog box and prompt dialog box),
+* Displaying clocks etc.
+
+JavaScript Example
+======================
+<script>  
+document.write("Hello JavaScript by JavaScript");  
+</script>  
+
+
+JavaScript Variable
+----------------------
+Correct JavaScript variables
+var x = 100;  
+var _value="ravi";  
+
+Incorrect JavaScript variables
+var  4587=32;  
+var *def=4587;  
+
+Example of JavaScript variable
+Let’s see a simple example of JavaScript variable.
+
+<script>  
+var x = 10;  
+var y = 20;  
+var z=x+y;  
+document.write(z);  
+</script>  
+
+JavaScript local variable
+---------------------------
+A JavaScript local variable is declared inside block or function. It is accessible within the function or block only. For example:
+
+<script>  
+function abc(){  
+var x=10;//local variable  
+}  
+</script>  
+
+Or,
+
+<script>  
+If(10<13){  
+var y=20;//JavaScript local variable  
+}  
+</script>  
+
+JavaScript global variable
+A JavaScript global variable is accessible from any function. A variable i.e. declared outside the function or declared with window object is known as global variable. For example:
+
+<script>  
+var data=200;//gloabal variable  
+function a(){  
+document.writeln(data);  
+}  
+function b(){  
+document.writeln(data);  
+}  
+a();//calling JavaScript function  
+b();  
+</script>  
+
+=================================================================================================
+Javascript Data Types
+----------------------------
+JavaScript provides different data types to hold different types of values. There are two types of data types in JavaScript.
+
+* Primitive data type
+* Non-primitive (reference) data type
+
+JavaScript is a dynamic type language, means you don't need to specify type of the variable because it is dynamically used by JavaScript engine. You need to use var here to specify the data type. It can hold any type of values such as numbers, strings etc. 
+
+For example:
+var a=40;//holding number  
+var b="Rahul";//holding string  
+
+
+
+JavaScript primitive data types
+--------------------------------------------------------------------------------
+There are five types of primitive data types in JavaScript. 
+
+They are as follows:
+===============================================================================
+Data Type		Description
+================	=======================================================
+String			represents sequence of characters e.g. "hello"
+Number			represents numeric values e.g. 100
+Boolean			represents boolean value either false or true
+Undefined		represents undefined value
+Null			represents null i.e. no value at all
+===============================================================================
+
+JavaScript non-primitive data types
+The non-primitive data types are as follows:
+===================================================================================
+Data Type		Description
+===================	===========================================================
+Object			represents instance through which we can access members
+Array			represents group of similar values
+RegExp			represents regular expression
+
+===================================================================================
+JavaScript Operators
+--------------------------------------------------------------------------------------
+JavaScript operators are symbols that are used to perform operations on operands. 
+
+For example:
+var sum=10+20;  
+
+Here, + is the arithmetic operator and = is the assignment operator.
+
+There are following types of operators in JavaScript.
+--------------------------------------------------------------------------------------
+* Arithmetic Operators
+* Comparison (Relational) Operators
+* Bitwise Operators
+* Logical Operators
+* Assignment Operators
+* Special Operators
+
+JavaScript Special Operators
+=======================================================================================
+The following operators are known as JavaScript special operators.
+---------------------------------------------------------------------------------------
+Operator		Description
+================	=======================================================================================
+(?:)			Conditional Operator returns value based on the condition. It is like if-else.
+,			Comma Operator allows multiple expressions to be evaluated as single statement.
+delete			Delete Operator deletes a property from the object.
+in			In Operator checks if object has the given property
+instanceof		checks if the object is an instance of given type
+new			creates an instance (object)
+typeof			checks the type of object.
+void			it discards the expression's return value.
+yield			checks what is returned in a generator by the generator's iterator.
+================================================================================================================
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <script>
+            //to print data on web page
+            document.write("Hello JavaScript");
+            //declare a variable
+            var count=100;
+            
+            document.write("<br>"+count);
+            
+            num=10;
+             document.write("<br>"+num);
+             
+             let num1=20;
+             document.write("<br>"+num1);
+             
+             let num2=30;
+              document.write("<br>"+num2);
+             
+             var count=200;
+             document.write("<br>"+count);
+             
+             num2=230;
+             document.write("<br>"+num2);
+             
+             const num3=1000;
+              document.write("<br>"+num3);
+              
+             // num3=2000;//we can't modify
+             // document.write("<br>"+num3);
+            
+            for(var i=0;i<=10;i++)
+            {
+                document.write("<br>"+i);
+            }
+            
+            //Wap to print fibonacci series
+            var n1=0,n2=1;
+            document.write("<br>"+n1+" "+n2+" ");
+            while(n2<100)
+            {
+                n2=n1+n2;
+                 document.write(n2+" ");
+                 n1=n2-n1;
+            }
+            
+           var msg="Hello";
+           if(msg=="Hello")
+           {
+               document.write("<br>True")
+           }
+           else
+           {
+                 document.write("<br>False")
+           }
+            
+            
+        </script>
+    </body>
+</html>
+================================================================================================================
+
+
+
+
+JavaScript Functions
+-----------------------------------------------------------------------
+JavaScript functions are used to perform operations. We can call JavaScript function many times to reuse the code.
+
+Advantage of JavaScript function
+==========================================================================
+There are mainly two advantages of JavaScript functions.
+--------------------------------------------------------------------------
+* Code reusability: We can call a function several times so it save coding.
+* Less coding: It makes our program compact. We don’t need to write many lines of code each time to perform a common 
+               task.
+
+
+JavaScript Function Syntax
+---------------------------------------------------------------
+The syntax of declaring function is given below.
+-----------------------------------------------------------------
+function functionName([arg1, arg2, ...argN]){  
+ //code to be executed  
+}  
+
+
+JavaScript Function Example
+==================================================================
+Let’s see the simple example of function in JavaScript that does not has arguments.
+
+<script>  
+function msg()
+{  
+alert("hello! this is message");  
+}  
+</script> 
+ 
+<input type="button" onclick="msg()" value="call function"/>  
+
+
+JavaScript Function Arguments
+======================================================================================================
+We can call function by passing arguments. Let’s see the example of function that has one argument.
+
+<script>  
+function getcube(number)
+{  
+	alert(number*number*number);  
+}  
+</script>  
+
+<form>  
+<input type="button" value="click" onclick="getcube(4)"/>  
+</form>  
+
+
+
+Function with Return Value
+=========================================================================================
+We can call function that returns a value and use it in our program. 
+
+Let’s see the example of function that returns value.
+
+<script>  
+function getInfo()
+{  
+return "hello javatpoint! How r u?";  
+}  
+</script>  
+
+<script>  
+document.write(getInfo());  
+</script>  
+
+Class Example:
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <script>
+            //definition of function
+            function msg()
+            {
+                document.write("Hello function");
+                console.log("Hello Function");//it is to print in console or command prompt
+            }
+            msg();//calling function
+            
+            //return value to the function
+            function cube()
+            {
+                
+                return 5*5*5;
+            }
+            var c=cube();
+            console.log(c);
+            document.write(c);
+            
+            function add(num1,num2)
+            {
+                var num3=num1+num2;
+                return num3;
+            }
+            console.log(add(100,200));
+            
+            //function expression
+            var a=function show()
+            {
+                document.write("Hello function ")
+            }
+            a();// call back function
+            
+            var reject=function st()
+            {
+                
+                    return false;
+            }
+            
+            function acd(reject)
+            {
+                if(reject)
+                {
+                    console.log("true");
+                }
+                else
+                {
+                     console.log("false");
+                }
+            }
+            
+            acd();
+            
+            
+            
+            
+            
+            
+        </script>
+    </body>
+</html>
+
+
+
+
+
+
+JavaScript Function Object
+===========================================================================================
+In JavaScript, the purpose of Function constructor is to create a new Function object. It executes the code globally. However, if we call the constructor directly, a function is created dynamically but in an unsecured way.
+
+Syntax
+new Function ([arg1[, arg2[, ....argn]],] functionBody)  
+
+JavaScript Function Methods
+=========================================================================================
+Let's see function methods with description.
+----------------------------------------------------------------------------------------
+Method			Description
+=================	======================================================================================
+apply()			It is used to call a function contains this value and a single array of arguments.
+bind()			It is used to create a new function.
+call()			It is used to call a function contains this value and an argument list.
+toString()		It returns the result in a form of a string.
+
+===============================================================================================================
+JavaScript Function Object Examples
+Example 1
+Let's see an example to display the sum of given numbers.
+
+<script>  
+	var add=new Function("num1","num2","return num1+num2");  
+	document.writeln(add(2,5));  
+</script>  
+
+
+Example 2
+-----------------------------------------------------------------------
+Let's see an example to display the power of provided value.
+=======================================================================
+<script>  
+var pow=new Function("num1","num2","return Math.pow(num1,num2)");  
+document.writeln(pow(2,3));  
+</script>  
+
+=====================================================================================================================
+ES6 Arrow Function
+--------------------------
+Arrow functions are introduced in ES6, which provides you a more accurate way to write the functions in JavaScript. They allow us to write smaller function syntax. Arrow functions make your code more readable and structured.
+
+Arrow functions are anonymous functions (the functions without a name and not bound with an identifier). They don't return any value and can declare without the function keyword. Arrow functions cannot be used as the constructors. The context within the arrow functions is lexically or statically defined. They are also called as Lambda Functions in different languages.
+
+Arrow functions do not include any prototype property, and they cannot be used with the new keyword.
+
+Syntax for defining the arrow function
+
+const functionName = (arg1, arg2, ?..) => {  
+    //body of the function  
+}  
+
+There are three parts to an Arrow Function or Lambda Function:
+	* Parameters: Any function may optionally have the parameters.
+	* Fat arrow notation/lambda notation: It is the notation for the arrow (=>).
+	* Statements: It represents the instruction set of the function.
+
+Let us try to understand it with an example.
+
+In the following example, we are defining three functions that show Function Expression, Anonymous Function, and Arrow Function.
+
+// function expression  
+  
+var myfun1 = function show() {  
+ console.log("It is a Function Expression");     
+}  
+  
+// Anonymous function  
+  
+var myfun2 = function () {  
+    console.log("It is an Anonymous Function");     
+   }  
+     
+//Arrow function  
+  
+var myfun3 = () => {  
+    console.log("It is an Arrow Function");     
+   };  
+  
+myfun1();  
+myfun2();  
+myfun3();  
+
+
+
+Arrow function with Rest parameters
+=================================================================================
+Rest parameters do not restrict you to pass the number of values in a function, but all the passed values must be of the same type. We can also say that rest parameters act as the placeholders for multiple arguments of the same type.
+
+For declaring the rest parameter, the parameter name should be prefixed with the spread operator that has three periods (not more than three or not less than three).
+
+You can see the illustration for the same in the following example:
+
+var show = (a, ...args) => {  
+    console.log(a + " " + args);  
+}  
+show(100,200,300,400,500,600,700,800);  
+
+
+Advantages of Arrow Functions
+================================================================
+There are some advantages of using arrow functions
+-----------------------------------------------------------------
+1. It reduces the code size: When we use the syntax of arrow function, the size of the code gets reduced. We can write less amount of code by using the arrow function.
+
+2. Return statement and Functional braces are optional for single line functions:In ES5, we need to define the return statement in the functions, but in ES6, we do not require to define the return statement for single-line functions. Functional braces are also optional for the single-line functions.
+
+=========================================================================================================
+Immediately Invoked Function Expression (IIFE)
+====================================================
+It is a JavaScript function that runs as soon as it defined. An IIFE (Immediately Invoked Function Expression) can be used for avoiding the variable hoisting from within the blocks. It allows the public access to methods while retaining the privacy for variables defined in the function.
+
+IIFE is a design pattern that is also known as the Self-Executing Anonymous Function. It contains two major parts:
+--------------------------------------------------------------------------------------------------------
+* The first part is the anonymous function having a lexical scope, which is enclosed within the Grouping operator ().
+* The second part creates the IIFE by which the JavaScript engine will interpret the function directly.
+
+Syntax
+--------------------------------------------------------------------------
+(function ()   
+{  
+    statements  
+})();  
+  
+// Syntax of IIFE with ES6 arrow functions (though parentheses only allowed on outside)  
+  
+(() => { /* ... */ })();   
+
+Let us try to understand the concept of IIFE by using the following example.
+------------------------------------------------------------------------------
+Example
+(function()  
+ {  
+ console.log("Hello World");   
+})();  
+
+
+Key points about IIFEs
+============================================================================================================
+* Immediately invoked function expressions (IIFEs) have their scope. The variables declared in the function 
+  expression will not be available outside the function.
+* Like other functions, IIFEs can also be anonymous or named.
+* IIFEs can also be parameterized. For example,
+
+
+Example
+(function (x, y, z) {  
+   console.log(x);  
+   console.log(y);  
+   console.log(z);  
+ })(100, 200, 300);  
+
+Class Example:
+---------------------
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <script>
+            //definition of function
+            function msg()
+            {
+                document.write("Hello function");
+                console.log("Hello Function");//it is to print in console or command prompt
+            }
+            msg();//calling function
+            
+            //return value to the function
+            function cube()
+            {
+                
+                return 5*5*5;
+            }
+            var c=cube();
+            console.log(c);
+            document.write(c);
+            
+            function add(num1,num2)
+            {
+                var num3=num1+num2;
+                return num3;
+            }
+            console.log(add(100,200));
+            
+            //function expression
+            var a=function show()
+            {
+                document.write("Hello function ")
+            }
+            a();// call back function
+            
+            var reject=function st()
+            {
+                
+                    return false;
+            }
+            
+            function acd(reject)
+            {
+                if(reject)
+                {
+                    console.log("true");
+                }
+                else
+                {
+                     console.log("false");
+                }
+            }
+            
+            acd();
+            
+            //Arrow function
+            var asd=()=>
+            {
+                console.log("Arrow function");
+            }
+            asd();
+            
+            var ano=function()
+            {
+                console.log("anonymous function");
+            }
+            ano();
+            
+            var ar=()=>console.log("Arrow");//arrow function 
+            ar();
+            
+            var a1=(num)=>{
+                return 10;
+            }
+            console.log(a1());
+            
+            //IIFE
+            (function()
+            {
+                console.log("IIFE");
+            })();
+            
+        </script>
+    </body>
+</html>

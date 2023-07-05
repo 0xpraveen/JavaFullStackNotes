@@ -1,0 +1,459 @@
+==================================================================================================================
+					CRUD Operations With Servlet
+==================================================================================================================
+1. Create a project "EmployeeManagmentSystem" as Web Application
+2. Create a package as"controller" under Source packages
+3. Create index.html as Home page and keep navbar like following code:
+index.html
+----------------
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Home</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        
+        <style>
+            /*Internal style Sheet*/
+          a
+          {
+              color:white;
+          }
+        </style>
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-light" style="background-color:#5e5ee2;;">
+            <a class="navbar-brand" href="#" style=" color:white;">EMS</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#" style=" color:white;" target="contentarea">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="SignUp.html" style=" color:white;" target="contentarea">SignUp</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style=" color:white;">
+                            Employees
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="AddEmployeeForm.html" target="contentarea">Add Employee</a>
+                            <a class="dropdown-item" href="#" target="contentarea">Update Employee</a>
+                            <a class="dropdown-item" href="#" target="contentarea">Delete Employee</a>
+                                <div class="dropdown-divider"></div>
+                           <a class="dropdown-item" href="#" target="contentarea">View Employee</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="LoginForm.html" style=" color:white;" target="contentarea">Login</a>
+                    </li>
+                </ul>
+                <form class="form-inline my-2 my-lg-0">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit" style=" color:white;">Search</button>
+                </form>
+            </div>
+        </nav>
+        <iframe name="contentarea" style="height: 600px; width: 100%;"></iframe>
+    </body>
+</html>
+
+Create AddEmployeeForm.html(Frontend)
+---------------------------------
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Add Employee Form</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <style>
+            /* form is a id name here */
+            form
+            {
+                margin-left: 25%;
+                margin-right: 25%;
+                margin-top: 2%;
+                box-shadow: 1px 1px 5px 5px #9e9cd3;;
+                padding: 20px;
+            }
+        </style>
+    </head>
+    <body>
+        <form action="AddEmployee" method="post" onsubmit="confirm('Do you want to submit?');">
+            <center><h4>Add Employee Form</h4></center>
+            <div class="form-group">
+                <label for="exampleInputEmail1">First Name</label>
+                <input type="text" name="fname" class="form-control" id="exampleInputUser1" aria-describedby="emailHelp" placeholder="Enter First Name">
+               
+            </div>
+             <div class="form-group">
+                <label for="exampleInputEmail1">Last Name</label>
+                <input type="text" name="lname" class="form-control" id="exampleInputUser1" aria-describedby="emailHelp" placeholder="Enter Last Name">
+         
+            </div>
+             <div class="form-group">
+                <label for="exampleInputEmail1">Date Of Birth</label>
+                <input type="date" name="dob" class="form-control" id="exampleInputUser1" aria-describedby="emailHelp" >
+                <small id="emailHelp" class="form-text text-muted">We'll never share your dob with anyone else.</small>
+            </div>
+             <div class="form-group">
+                <label for="exampleInputEmail1">Contact Number</label>
+                <input type="number" name="contact" class="form-control" id="exampleInputUser1" aria-describedby="emailHelp" >
+                <small id="emailHelp" class="form-text text-muted">We'll never share your contact with anyone else.</small>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputEmail1">Email address</label>
+                <input type="email" name="empemail" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+            </div>
+             <div class="form-group">
+                 <label for="exampleInputEmail1">Gender</label><br>
+                 <input type="radio" name="gender"  value="Male" >Male &nbsp;&nbsp;&nbsp;
+                <input type="radio" name="gender"  value="Female" >Female &nbsp;&nbsp;&nbsp;
+                <input type="radio" name="gender"  value="Other" >Other
+            </div>
+            <div class="form-group">
+                <label>Designation</label>
+                <select name="designation"  class="form-control">
+                    <option>Java Developer</option>
+                    <option>Junior Java Developer</option>
+                    <option>Senior Java Developer</option>
+                    <option>Technical Support</option>
+                    <option>Backend Developer</option>
+                    <option>Front-end Developer</option>
+                    <option>Full Stack Java Developer</option>
+                    <option>Python Developer</option>
+                    <option>Web Developer</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Salary</label>
+                <input type="number" name="salary" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label>State</label>
+                <select name="state" class="form-control">
+                    <option></option>
+                    <option value="Andhra Pradesh">Andhra Pradesh</option>
+                          <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                          <option value="Assam">Assam</option>
+                          <option value="Bihar">Bihar</option>
+                          <option value="Chhattisgarh">Chhattisgarh</option>
+                          <option value="Goa">Goa</option>
+                          <option value="Gujarat">Gujarat</option>
+                          <option value="Haryana">Haryana</option>
+                          <option value="Himachal Pradesh">Himachal Pradesh</option>
+                          <option value="Jammu and Kashmir">Jammu and Kashmir</option>
+                          <option value="Jharkhand">Jharkhand</option>
+                          <option value="Karnataka">Karnataka</option>
+                          <option value="Kerala">Kerala</option>
+                          <option value="Madhya Pradesh">Madhya Pradesh</option>
+                          <option value="Maharashtra">Maharashtra</option>
+                          <option value="Manipur">Manipur</option>
+                          <option value="Meghalaya">Meghalaya</option>
+                          <option value="Mizoram">Mizoram</option>
+                          <option value="Nagaland">Nagaland</option>
+                          <option value="Odisha">Odisha</option>
+                          <option value="Punjab">Punjab</option>
+                          <option value="Rajasthan">Rajasthan</option>
+                          <option value="Sikkim">Sikkim</option>
+                          <option value="Tamil Nadu">Tamil Nadu</option>
+                          <option value="Telangana">Telangana</option>
+                          <option value="Tripura">Tripura</option>
+                          <option value="Uttar Pradesh">Uttar Pradesh</option>
+                          <option value="Uttarakhand">Uttarakhand</option>
+                          <option value="West Bengal">West Bengal</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Country</label>
+                <select name="country" class="form-control">
+                    <option></option>
+                    <option value="India">India</option>
+                    <option value="australia">Australia</option>
+                    <option value="canada">Canada</option>
+                    <option value="Usa">USA</option>
+                    <option value="Nepal">Nepal</option>
+                    <option value="China">China</option>
+                    <option value="Sri Lanka">Sri Lanka</option>
+                    <option value="Uganda">Uganda</option>
+                    <option value="Pakistan">Pakistan</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Joining Date</label>
+                <input type="date" name="joiningdate" class="form-control"/>
+            </div>
+            <div class="form-group">
+                <label>Working Hours</label>
+                <input type="number" name="workinghrs" class="form-control"/>
+            </div>
+             <div class="form-group">
+                <label>Zip Code</label>
+                <input type="number" name="zipcode" class="form-control"/>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">Password</label>
+                <input type="password" name="emppassword" class="form-control" id="exampleInputPassword1" placeholder="Password">
+            </div>
+           
+            <input type="submit" class="btn btn-primary" value="Add Employee"/>
+        </form>
+        
+    
+    </body>
+</html>
+
+Create Servlet As AddEmployee.java(Servlet-Server Side Java Program)
+------------------------------------------------------------------------
+AddEmployee.java
+-------------------
+package controller;
+import javax.servlet.http.*;
+import java.io.*;
+import java.sql.*;
+import javax.servlet.*;
+
+public class AddEmployee extends HttpServlet 
+{
+    ServletContext jdbc=null;
+    public void doPost(HttpServletRequest request,HttpServletResponse response)throws IOException
+    {
+        PrintWriter out=response.getWriter();
+        response.setContentType("text/html");
+        
+        jdbc=getServletContext();//initialize ServletContext or get Object of Servlet Context
+        
+        String driver=jdbc.getInitParameter("driver");//from web.xml file
+        String url=jdbc.getInitParameter("url");//from web.xml file
+        String username=jdbc.getInitParameter("user");//from web.xml file
+        String password=jdbc.getInitParameter("pass");//from web.xml file
+    
+//Employee Form data    
+        String fname=request.getParameter("fname");
+        String lname=request.getParameter("lname");
+        String dob=request.getParameter("dob");
+        String contact=request.getParameter("contact");
+        String email=request.getParameter("empemail");
+        String gender=request.getParameter("gender");
+        String designation=request.getParameter("designation");
+        float salary=Float.parseFloat(request.getParameter("salary"));
+        String state=request.getParameter("state");
+        String country=request.getParameter("country");
+        String joiningdate=request.getParameter("joiningdate");
+        float workinghrs=Float.parseFloat(request.getParameter("workinghrs"));
+        int zipcode=Integer.parseInt(request.getParameter("zipcode"));
+        String emppassword=request.getParameter("emppassword");
+// Above data are from AddEmployeeForm.html        
+        
+        Connection con=null;
+        try
+        {
+            Class.forName(driver);
+            con=DriverManager.getConnection(url, username, password);
+            String insert="insert into employee(firstname,lastname,dob,contact,email,gender,designation,salary,state,country,joinningdate,workinghours,zipcode,password)values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            PreparedStatement ps=con.prepareStatement(insert);
+            ps.setString(1, fname);
+            ps.setString(2,lname);
+            ps.setString(3, dob);
+            ps.setString(4, contact);
+            ps.setString(5, email);
+            ps.setString(6,gender);
+            ps.setString(7, designation);
+            ps.setFloat(8, salary);
+            ps.setString(9, state);
+            ps.setString(10,country);
+            ps.setString(11, joiningdate);
+            ps.setFloat(12,workinghrs);
+            ps.setInt(13, zipcode);
+            ps.setString(14,emppassword);
+            
+            int status=ps.executeUpdate();
+            
+            if(status>0)
+            {
+                out.print("Employee is added successfully");
+            }
+            else
+            {
+                out.print("Employee is not added successfully! Please check your data");
+            }
+        }
+        catch(Exception e)
+        {
+            out.print(e);
+        }
+        finally
+        {
+            try
+            {
+                con.close();
+            }
+            catch(Exception e)
+            {
+                out.print(e);
+            }
+        }
+        
+    }
+   
+}
+
+
+Create ViewEmployee.JSP
+----------------------------------------------
+<%-- 
+    Document   : ViewEmployees
+    Created on : 3 Jul, 2023, 3:25:00 PM
+    Author     : Basavaraju
+--%>
+
+
+<%@page import="java.sql.*"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>View Employees </title>
+    </head>
+    <body>
+        <table border="1">
+            <tr><th>Action</th><th>Slno</th><th>EmpId</th><th>FirstName</th><th>LastName</th><th>DOB</th><th>Contact</th><th>Email</th><th>Gender</th><th>Designation</th><th>Salary</th><th>State</th><th>Country</th><th>JoiningDate</th><th>WorkingHours</th><th>ZipCode</th><th>Password</th><th>EntryDate</th></tr>
+        <%
+            //Scriplet tag
+             Connection con=null;
+             try
+             {
+                 String driver=application.getInitParameter("driver");
+                 //System.out.println("Driver :"+driver);
+                 String url=application.getInitParameter("url");
+                 String user=application.getInitParameter("user");
+                 String pass=application.getInitParameter("pass");
+                 
+                 Class.forName(driver);
+                 con=DriverManager.getConnection(url, user, pass);
+                 
+                 String sql="select * from employee";
+                 
+                 Statement smt=con.createStatement();
+                 ResultSet rs=smt.executeQuery(sql);
+                 int slno=0;
+                 while(rs.next())
+                 {
+                    slno++;
+                    int empid=rs.getInt("empid");
+        %>
+            <tr><td><a href="EditEmployeeForm.jsp?empid=<%=empid%>" >Edit</a> | <a href="">Delete</a></td><td><%=slno%></td><td><%=rs.getString("empid")%></td><td><%=rs.getString("firstname")%></td><td><%=rs.getString("lastname")%></td><td><%=rs.getString("dob")%></td><td><%=rs.getString("contact")%></td><td><%=rs.getString("email")%></td><td><%=rs.getString("gender")%></td><td><%=rs.getString("designation")%></td><td><%=rs.getString("salary")%></td><td><%=rs.getString("state")%></td><td><%=rs.getString("country")%></td><td><%=rs.getString("joinningdate")%></td><td><%=rs.getString("workinghours")%></td><td><%=rs.getString("zipcode")%></td><td><%=rs.getString("password")%></td><td><%=rs.getString("entrydate")%></td></tr>     
+
+        <%
+                 }
+                 
+                 
+                 
+             }
+             catch(Exception e)
+             {
+                 out.print(e);
+             }
+             finally
+             {
+                 con.close();
+             }
+            
+            
+        %>  
+        
+        </table>
+    </body>
+</html>
+
+Create EditEmployeeForm.jsp
+---------------------------------
+<%-- 
+    Document   : EditEmployeeForm
+    Created on : 3 Jul, 2023, 4:36:58 PM
+    Author     : Basavaraju
+--%>
+
+<%@page import="java.sql.*"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>JSP Page</title>
+    </head>
+    <body>
+        <form>
+            <table>
+        <%
+            int empid=Integer.parseInt(request.getParameter("empid"));
+            Connection con=null;
+            try
+            {
+                Class.forName(application.getInitParameter("driver"));
+                con=DriverManager.getConnection(application.getInitParameter("url"), application.getInitParameter("user"), application.getInitParameter("pass"));
+                String sql="select * from employee where empid=?";
+                PreparedStatement ps=con.prepareStatement(sql);
+                ps.setInt(1,empid);
+                ResultSet rs=ps.executeQuery();
+                while(rs.next())
+                {
+        %>
+        <tr><td>Employee ID</td><td><input type="text" name="empid" value="<%=rs.getString("empid")%>" readonly/></td></tr>
+        <tr><td>First Name</td><td><input type="text" name="empid" value="<%=rs.getString("firstname")%>"/></td></tr>
+        <tr><td>Last Name</td><td><input type="text" name="empid" value="<%=rs.getString("lastname")%>"/></td>
+        </tr><tr><td>Date Of Birth</td><td><input type="text" name="empid" value="<%=rs.getString("dob")%>"/></td>
+        </tr><tr><td>Contact Number</td><td><input type="text" name="empid" value="<%=rs.getString("contact")%>"/></td>
+        </tr><tr><td>Email</td><td><input type="text" name="empid" value="<%=rs.getString("email")%>"/></td>
+        </tr><tr><td>Gender</td><td><input type="text" name="empid" value="<%=rs.getString("gender")%>"/></td>
+        </tr><tr><td>Designation</td><td><input type="text" name="empid" value="<%=rs.getString("designation")%>"/></td>
+        </tr><tr><td>Salary</td><td><input type="text" name="empid" value="<%=rs.getString("salary")%>"/></td>
+        </tr><tr><td>State</td><td><input type="text" name="empid" value="<%=rs.getString("state")%>"/></td>
+        </tr><tr><td>Country</td><td><input type="text" name="empid" value="<%=rs.getString("country")%>"/></td>
+        </tr><tr><td>Joining Date</td><td><input type="text" name="empid" value="<%=rs.getString("joinningdate")%>"/></td>
+        </tr><tr><td>Working Hours</td><td><input type="text" name="empid" value="<%=rs.getString("workinghours")%>"/></td>
+        </tr><tr><td>Zip Code</td><td><input type="text" name="empid" value="<%=rs.getString("zipcode")%>"/></td>
+        </tr><tr><td>Password</td><td><input type="text" name="empid" value="<%=rs.getString("password")%>"/></td></tr>    
+        
+        <%
+                }
+            }
+            catch(Exception e)
+            {
+                out.print(e);
+            }
+            finally
+            {
+                con.close();
+            }
+                
+
+        %>
+        <tr>
+            <td colspan="2"><input type="submit" value="Update Employee"/></td>
+        </tr>
+            </table>
+        </form>
+    </body>
+</html>
+
+====================================================================================================================
