@@ -1,0 +1,727 @@
+===============================================================================================================
+Spring Framework
+===============================================================================================================
+Spring is a lightweight framework. It can be thought of as a framework of frameworks because it provides support to various frameworks such as Struts, Hibernate, Tapestry, EJB, JSF, etc. The framework, in broader sense, can be defined as a structure where we find solution of the various technical problems.
+
+The Spring framework comprises several modules such as IOC, AOP, DAO, Context, ORM, WEB MVC etc. We will learn these modules in next page. 
+==================================================================================================================
+
+Inversion Of Control (IOC) and Dependency Injection
+------------------------------------------------------------------------
+These are the design patterns that are used to remove dependency from the programming code. They make the code easier to test and maintain. Let's understand this with the following code:
+
+class Employee
+{  
+Address address;  
+Employee()
+{  
+address=new Address();  
+}  
+}  
+
+In such case, there is dependency between the Employee and Address (tight coupling). In the Inversion of Control scenario, we do this something like this:
+
+class Employee
+{  
+Address address;  
+Employee(Address address)
+{  
+	this.address=address;  
+}  
+}  
+
+Thus, IOC makes the code loosely coupled. In such case, there is no need to modify the code if our logic is moved to new environment.
+
+In Spring framework, IOC container is responsible to inject the dependency. We provide metadata to the IOC container either by XML file or annotation.
+
+Advantage of Dependency Injection
+----------------------------------------------------------------------
+* makes the code loosely coupled so easy to maintain
+* makes the code easy to test
+
+Advantages of Spring Framework
+-----------------------------------------------------------------------
+There are many advantages of Spring Framework. They are as follows:
+------------------------------------------------------------------------
+1) Predefined Templates
+Spring framework provides templates for JDBC, Hibernate, JPA etc. technologies. So there is no need to write too much code. It hides the basic steps of these technologies.
+
+Let's take the example of JdbcTemplate, you don't need to write the code for exception handling, creating connection, creating statement, committing transaction, closing connection etc. You need to write the code of executing query only. Thus, it save a lot of JDBC code.
+
+2) Loose Coupling
+The Spring applications are loosely coupled because of dependency injection.
+
+3) Easy to test
+The Dependency Injection makes easier to test the application. The EJB or Struts application require server to run the application but Spring framework doesn't require server.
+
+4) Lightweight
+Spring framework is lightweight because of its POJO implementation. The Spring Framework doesn't force the programmer to inherit any class or implement any interface. That is why it is said non-invasive.
+
+5) Fast Development
+The Dependency Injection feature of Spring Framework and it support to various frameworks makes the easy development of JavaEE application.
+
+6) Powerful abstraction
+It provides powerful abstraction to JavaEE specifications such as JMS, JDBC, JPA and JTA.
+
+7) Declarative support
+It provides declarative support for caching, validation, transactions and formatting.
+
+====================================================================================================================
+						Spring Modules
+====================================================================================================================
+The Spring framework comprises of many modules such as core, beans, context, expression language, AOP, Aspects, Instrumentation, JDBC, ORM, OXM, JMS, Transaction, Web, Servlet, Struts etc. These modules are grouped into Test, Core Container, AOP, Aspects, Instrumentation, Data Access / Integration, Web (MVC / Remoting)
+
+Modules :
+==================================
+=> Test
+This layer provides support of testing with JUnit and TestNG.
+
+=> Spring Core Container
+The Spring Core container contains core, beans, context and expression language (EL) modules.
+
+=> Core and Beans
+These modules provide IOC and Dependency Injection features.
+
+=> Context
+This module supports internationalization (I18N), EJB, JMS, Basic Remoting.
+
+=> Expression Language
+It is an extension to the EL defined in JSP. It provides support to setting and getting property values, method invocation, accessing collections and indexers, named variables, logical and arithmetic operators, retrieval of objects by name etc.
+
+=> AOP, Aspects and Instrumentation
+These modules support aspect oriented programming implementation where you can use Advices, Pointcuts etc. to decouple the code.
+
+The aspects module provides support to integration with AspectJ.
+
+The instrumentation module provides support to class instrumentation and classloader implementations.
+
+=> Data Access / Integration
+This group comprises of JDBC, ORM, OXM, JMS and Transaction modules. These modules basically provide support to interact with the database.
+
+=> Web
+This group comprises of Web, Web-Servlet, Web-Struts and Web-Portlet. These modules provide support to create web application.
+
+
+====================================================================================================================
+Spring Example
+=================
+Here, we are going to learn the simple steps to create the first spring application. 
+Let's see the simple steps to create the spring application
+--------------------------------------------------------------
+* create the class
+* create the xml file to provide the values
+* create the test class
+* Load the spring jar files
+* Run the test class
+
+
+Steps to create spring application
+------------------------------------------------------------------------------------
+Let's see the 5 steps to create the first spring application.
+
+1. Create Student.java class:
+package controller;
+
+
+//Object/Beans/JPA class
+public class Student 
+{
+    private String name,contact;
+    
+    public void setName(String name)
+    {
+        this.name=name;
+    }
+    public String getName()
+    {
+        return name;
+    }
+    public void setContact(String contact)
+    {
+        this.contact=contact;
+    }
+    public String getContact()
+    {
+        return contact;
+    }
+    
+}
+
+2. Create applicationContext.xml file
+------------------------------------------
+applicationContext.xml
+------------------------------
+<?xml version="1.0" encoding="UTF-8"?>  
+<beans  
+    xmlns="http://www.springframework.org/schema/beans"  
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
+    xmlns:p="http://www.springframework.org/schema/p"  
+    xsi:schemaLocation="http://www.springframework.org/schema/beans  
+    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">  
+  
+<bean id="st" class="controller.Student"></bean> 
+</bean>  
+  
+</beans>  
+
+3.Create TestingIOC.java class:
+-----------------------------------------------
+package model;
+
+import controller.Student;
+import org.springframework.beans.factory.BeanFactory;
+import org.springframework.beans.factory.xml.XmlBeanFactory;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
+
+public class TestingIOC 
+{
+    public static void main(String[] args)
+    {
+        Resource resource=new ClassPathResource("applicationContext.xml");
+        BeanFactory factory=new XmlBeanFactory(resource);
+        
+        Student st=(Student)factory.getBean("st");
+        st.setName("Anuvedya");
+        st.setContact("423512435");
+        
+        String name=st.getName();
+        String contact=st.getContact();
+        
+        System.out.println("Name :"+name);
+        System.out.println("Contact :"+contact);
+    }
+}
+
+4.Add jar file springcore
+5. execute the TestingIOC.java file.
+
+
+-=================================
+Class Example:
+-----------------
+User.java(Bean)
+---------------
+package com.lpu.model;
+
+import java.beans.*;
+import java.io.Serializable;
+
+//Bean class
+public class User implements Serializable 
+{
+    //data member
+   private String name;
+   private int roll;
+
+   //getter method is an accutators
+    public String getName() {
+        return name;
+    }
+
+    //setter method is an mutator
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getRoll() {
+        return roll;
+    }
+
+    public void setRoll(int roll) {
+        this.roll = roll;
+    }
+   
+   public void display()
+   {
+       System.out.println("Name :"+name);
+       System.out.println("Roll :"+roll);
+   }
+   
+  
+}
+
+applicationContext.xml
+------------------------
+<?xml version="1.0" encoding="UTF-8"?>
+<beans  
+    xmlns="http://www.springframework.org/schema/beans"  
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
+    xmlns:p="http://www.springframework.org/schema/p"  
+    xsi:schemaLocation="http://www.springframework.org/schema/beans  
+    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"> 
+    
+    <bean id="u" class="com.lpu.model.User" >
+        <property name="name" value="Rohit"/>
+        <property name="roll" value="101"/>
+    </bean>
+    
+</beans>
+
+
+
+TestIOC.java
+----------------
+package com.lpu.controller;
+
+import com.lpu.model.User;
+import org.springframework.beans.factory.BeanFactory;
+import org.springframework.beans.factory.xml.XmlBeanFactory;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
+
+public class TestIOC 
+{
+    public static void main(String[] args)
+    {
+        Resource resource=new ClassPathResource("applicationContext.xml");
+        BeanFactory factory=new XmlBeanFactory(resource);
+        
+//        User user=(User)factory.getBean("u");
+        User user=factory.getBean("u",User.class);
+        user.display();
+        
+        user.setName("Anuvedya");
+        user.setRoll(200);
+        
+        user.display();
+        
+        
+        
+        
+    }
+}
+
+
+
+===================================================================================================================
+IoC Container
+====================
+The IoC container is responsible to instantiate, configure and assemble the objects. The IoC container gets informations from the XML file and works accordingly. 
+
+The main tasks performed by IoC container are:
+--------------------------------------------------------
+* to instantiate the application class
+* to configure the object
+* to assemble the dependencies between the objects
+
+There are two types of IoC containers. 
+They are:
+1. BeanFactory
+2. ApplicationContext
+
+Difference between BeanFactory and the ApplicationContext
+============================================================
+The org.springframework.beans.factory.BeanFactory and the org.springframework.context.ApplicationContext interfaces acts as the IoC container. The ApplicationContext interface is built on top of the BeanFactory interface. It adds some extra functionality than BeanFactory such as simple integration with Spring's AOP, message resource handling (for I18N), event propagation, application layer specific context (e.g. WebApplicationContext) for web application. So it is better to use ApplicationContext than BeanFactory.
+
+
+Using BeanFactory
+---------------------------
+The XmlBeanFactory is the implementation class for the BeanFactory interface. To use the BeanFactory, 
+we need to create the instance of XmlBeanFactory class as given below:
+
+code:
+Resource resource=new ClassPathResource("applicationContext.xml");  
+BeanFactory factory=new XmlBeanFactory(resource);  
+
+
+The constructor of XmlBeanFactory class receives the Resource object so we need to pass the resource object to create the object of BeanFactory.
+
+
+Using ApplicationContext
+--------------------------------
+The ClassPathXmlApplicationContext class is the implementation class of ApplicationContext interface. We need to instantiate the ClassPathXmlApplicationContext class to use the ApplicationContext as given below:
+
+code:
+ApplicationContext context =new ClassPathXmlApplicationContext("applicationContext.xml");  
+
+The constructor of ClassPathXmlApplicationContext class receives string, so we can pass the name of the xml file to create the instance of ApplicationContext.
+
+Example:
+---------------
+package com.lpu.controller;
+
+import com.lpu.model.User;
+import org.springframework.beans.factory.BeanFactory;
+import org.springframework.beans.factory.xml.XmlBeanFactory;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
+
+public class TestIOC 
+{
+    public static void main(String[] args)
+    {
+//        Resource resource=new ClassPathResource("applicationContext.xml");
+//        BeanFactory factory=new XmlBeanFactory(resource);
+        ApplicationContext c=new ClassPathXmlApplicationContext("applicationContext.xml");
+//        User user=(User)factory.getBean("u");
+//        User user=factory.getBean("u",User.class);
+        User user=c.getBean("u",User.class);
+        user.display();
+        
+        user.setName("Anuvedya");
+        user.setRoll(200);
+        
+        user.display();
+        
+        
+        
+        
+    }
+}
+
+
+=====================================================================================================================
+Autowiring in Spring
+-------------------------------
+Autowiring feature of spring framework enables you to inject the object dependency implicitly. It internally uses setter or constructor injection.
+
+Autowiring can't be used to inject primitive and string values. It works with reference only.
+
+Advantage of Autowiring
+===============================
+It requires the less code because we don't need to write the code to inject the dependency explicitly.
+
+
+Disadvantage of Autowiring
+===============================
+No control of programmer.
+
+It can't be used for primitive and string values.
+
+Autowiring Modes
+==============================================
+There are many autowiring modes:
+-----------------------------------------------
+
+No.		Mode			Description
+====		=====			======================================================================
+1)		no			It is the default autowiring mode. It means no autowiring bydefault.
+2)		byName			The byName mode injects the object dependency according to name of the bean. 
+					In such case, property name and bean name must be same. It internally calls 
+					setter method.
+3)		byType			The byType mode injects the object dependency according to type. So property 
+					name and bean name can be different. It internally calls setter method.
+4)		constructor		The constructor mode injects the dependency by calling the constructor of the 
+					class. It calls the constructor having large number of parameters.
+5)		autodetect		It is deprecated since Spring 3.
+
+===================================================================================================================
+Dependency Injection with Factory Method in Spring:
+===================================================================================================================
+Spring framework provides facility to inject bean using factory method. 
+
+To do so, we can use two attributes of bean element.
+* factory-method: represents the factory method that will be invoked to inject the bean.
+* factory-bean: represents the reference of the bean by which factory method will be invoked. It is used if factory 
+  method is non-static.
+
+A method that returns instance of a class is called factory method.
+
+public class A 
+{  
+public static A getA()
+{
+//factory method  
+    return new A();  
+}  
+}  
+
+Factory Method Types
+========================================================================
+There can be three types of factory method:
+========================================================================
+1) A static factory method that returns instance of its own class. It is used in singleton design pattern.
+
+<bean id="a" class="com.lpu.A" factory-method="getA"></bean>
+  
+2) A static factory method that returns instance of another class. It is used instance is not known and decided at runtime.
+
+<bean id="b" class="com.lpu.A" factory-method="getB"></bean> 
+ 
+3) A non-static factory method that returns instance of another class. It is used instance is not known and decided at runtime.
+
+<bean id="a" class="com.lpu.A"></bean>  
+<bean id="b" class="com.lpu.A" factory-method="getB" factory-bean="a"></bean>  
+
+
+===================================================================================================================
+Let's see the full example to inject dependency using factory method in spring. 
+
+To create this example, we have created 3 files.
+1. A.java
+2. applicationContext.xml
+3. Test.java
+
+A.java
+----------------
+This class is a singleton class.
+
+package com.lpu;  
+public class A 
+{  
+private static final A obj=new A();  
+private A(){System.out.println("private constructor");}  
+public static A getA(){  
+    System.out.println("factory method ");  
+    return obj;  
+}  
+public void msg(){  
+    System.out.println("hello user");  
+}  
+}  
+
+applicationContext.xml
+-----------------------------------------------------------
+<?xml version="1.0" encoding="UTF-8"?>  
+<beans  
+    xmlns="http://www.springframework.org/schema/beans"  
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
+    xmlns:p="http://www.springframework.org/schema/p"  
+    xsi:schemaLocation="http://www.springframework.org/schema/beans   
+http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">  
+  
+<bean id="a" class="com.lpu.A" factory-method="getA"></bean>  
+  
+</beans>  
+
+
+Test.java
+----------------------------
+This class gets the bean from the applicationContext.xml file and calls the msg method.
+
+package org.sssit;  
+import org.springframework.context.ApplicationContext;  
+import org.springframework.context.support.ClassPathXmlApplicationContext;  
+public class Test 
+{  
+public static void main(String[] args) 
+{  
+    ApplicationContext context=new ClassPathXmlApplicationContext("applicationContext.xml");  
+    A a=(A)context.getBean("a");  
+    a.msg();  
+}  
+}  
+
+
+
+====================================================================================================================
+Spring AOP 
+=============
+Aspect Oriented Programming (AOP) compliments OOPs in the sense that it also provides modularity. But the key unit of modularity is aspect than class.
+
+AOP breaks the program logic into distinct parts (called concerns). It is used to increase modularity by cross-cutting concerns.
+
+A cross-cutting concern is a concern that can affect the whole application and should be centralized in one location in code as possible, such as transaction management, authentication, logging, security etc.
+
+
+Why use AOP?
+===============================================
+It provides the pluggable way to dynamically add the additional concern before, after or around the actual logic. Suppose there are 10 methods in a class as given below:
+
+class A{  
+public void m1(){...}  
+public void m2(){...}  
+public void m3(){...}  
+public void m4(){...}  
+public void m5(){...}  
+public void n1(){...}  
+public void n2(){...}  
+public void p1(){...}  
+public void p2(){...}  
+public void p3(){...}  
+}  
+
+
+There are 5 methods that starts from m, 2 methods that starts from n and 3 methods that starts from p.
+------------------------------------------------------------------------------------------------------------
+Understanding Scenario I have to maintain log and send notification after calling methods that starts from m.
+
+* Problem without AOP We can call methods (that maintains log and sends notification) from the methods starting with m. In such scenario, we need to write the code in all the 5 methods.
+
+But, if client says in future, I don't have to send notification, you need to change all the methods. It leads to the maintenance problem.
+
+* Solution with AOP We don't have to call methods from the method. Now we can define the additional concern like maintaining log, sending notification etc. in the method of a class. Its entry is given in the xml file.
+
+* In future, if client says to remove the notifier functionality, we need to change only in the xml file. So, maintenance is easy in AOP.
+
+Where use AOP?
+-----------------------
+AOP is mostly used in following cases:
+-------------------------------------------------
+* to provide declarative enterprise services such as declarative transaction management.
+* It allows users to implement custom aspects.
+
+
+=====================================================================================================================
+Spring Boot Project With Controller:
+--------------------------
+index.jsp
+------------
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+    "http://www.w3.org/TR/html4/loose.dtd">
+
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Welcome to Spring Web MVC project</title>
+    </head>
+
+    <body>
+        <h3>Hello Index.jsp</h3>
+    </body>
+</html>
+
+
+Home.jsp
+-------------
+<%-- 
+    Document   : Home
+    Created on : 5 Jul, 2023, 3:33:01 PM
+    Author     : Basavaraju
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>JSP Page</title>
+    </head>
+    <body>
+        <h1>Hello World!</h1>
+    </body>
+</html>
+
+
+EmployeeController.java(Controller)
+-----------------------------------------
+package com.lpu.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+
+@Controller
+
+public class EmployeeController 
+{
+    @RequestMapping("/")
+    public String getIndex()
+    {
+        return "index.jsp";
+    }
+    
+    @RequestMapping("/home")
+    public String getHome()
+    {
+        return "Home.jsp";//return complete web page along with html,css,javascript ect..
+    }
+    
+    @RequestMapping("/read")
+    @ResponseBody// it will return data instead of web pgaes as html
+    public String getRead()
+    {
+        String msg="{\n" +
+"\"name\":\"John\",\n" +
+"\"age\":30,\n" +
+"\"cars\":[\"Ford\", \"BMW\", \"Fiat\"]\n" +
+"}";
+        return msg;
+    }
+}
+
+
+
+Configuration in web.xml
+-----------------------------
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+   
+    <servlet>
+        <servlet-name>dispatcher</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>dispatcher</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+   
+</web-app>
+
+
+Configuration in dispatcher-servlet.xml
+---------------------------------------
+<?xml version='1.0' encoding='UTF-8' ?>
+<!-- was: <?xml version="1.0" encoding="UTF-8"?> -->
+<beans xmlns="http://www.springframework.org/schema/beans"  
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"   
+    xmlns:context="http://www.springframework.org/schema/context"  
+    xmlns:mvc="http://www.springframework.org/schema/mvc"  
+    xsi:schemaLocation="http://www.springframework.org/schema/beans  
+        http://www.springframework.org/schema/beans/spring-beans.xsd  
+        http://www.springframework.org/schema/context  
+        http://www.springframework.org/schema/context/spring-context.xsd  
+        http://www.springframework.org/schema/mvc  
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd">  
+    
+    <context:component-scan base-package="com.lpu.controller"/>//scan com.lpu.controller package
+    <mvc:annotation-driven></mvc:annotation-driven>
+   
+</beans>
+
+Execute the project:
+------------------------
+Use URL API:
+api:http://localhost:8080/SpringBootProjectExample/read
+api:http://localhost:8080/SpringBootProjectExample/home
+api:http://localhost:8080/SpringBootProjectExample/
+
+=============================================================================================================
+Example of @RestController
+--------------------------------
+EmployeeController.java(Controller file)
+---------------------------------------------
+package com.lpu.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+
+//@Controller
+//RestController is combination of @controller and @responsebody
+@RestController
+public class EmployeeController 
+{
+    @RequestMapping("/")
+    public String getIndex()
+    {
+        return "index.jsp";
+    }
+    
+    @RequestMapping("/home")
+    public String getHome()
+    {
+        return "Home.jsp";
+    }
+    
+    @RequestMapping("/read")
+//    @ResponseBody <- not required when we are using @RestController annotation
+    public String getRead()
+    {
+        String msg="{\n" +
+"\"name\":\"John\",\n" +
+"\"age\":30,\n" +
+"\"cars\":[\"Ford\", \"BMW\", \"Fiat\"]\n" +
+"}";
+        return msg;
+    }
+}
+
+

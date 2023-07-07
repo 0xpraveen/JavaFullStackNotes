@@ -1,0 +1,591 @@
+===========================================================================================
+				JDBCTEMPLATE
+===========================================================================================
+Spring JdbcTemplate is a powerful mechanism to connect to the database and execute SQL queries. It internally uses JDBC api, but eliminates a lot of problems of JDBC API.
+
+Problems of JDBC API
+==============================================
+The problems of JDBC API are as follows:
+----------------------------------------------
+* We need to write a lot of code before and after executing the query, such as creating 
+  connection, statement, closing resultset, connection etc.
+* We need to perform exception handling code on the database logic.
+* We need to handle transaction.
+* Repetition of all these codes from one to another database logic is a time consuming task.
+
+Advantage of Spring JdbcTemplate
+===============================================
+Spring JdbcTemplate eliminates all the above mentioned problems of JDBC API. It provides you methods to write the queries directly, so it saves a lot of work and time.
+
+Spring Jdbc Approaches
+==========================================================================
+Spring framework provides following approaches for JDBC database access:
+--------------------------------------------------------------------------
+* JdbcTemplate
+* NamedParameterJdbcTemplate
+* SimpleJdbcTemplate
+* SimpleJdbcInsert and SimpleJdbcCall
+
+JdbcTemplate class
+===========================================================================
+It is the central class in the Spring JDBC support classes. It takes care of creation and release of resources such as creating and closing of connection object etc. So it will not lead to any problem if you forget to close the connection.
+
+It handles the exception and provides the informative exception messages by the help of excepion classes defined in the org.springframework.dao package.
+
+We can perform all the database operations by the help of JdbcTemplate class such as insertion, updation, deletion and retrieval of the data from the database.
+
+Let's see the methods of spring JdbcTemplate class.
+--------------------------------------------------------------------------------------------
+No. Method					Description
+==  =========================================	=============================================
+1)  public int update(String query)		is used to insert, update and delete records.
+2)  public int update(String query,Object... args) is used to insert, update and delete 
+						records using PreparedStatement using given 
+						arguments.
+3)  public void execute(String query)		is used to execute DDL query.
+4)  public T execute(String sql, 
+	PreparedStatementCallback action)	executes the query by using PreparedStatement 
+						callback.
+5)  public T query(String sql, 
+	ResultSetExtractor rse)			is used to fetch records using 
+						ResultSetExtractor.
+6)  public List query(String sql, 
+	RowMapper rse)				is used to fetch records using RowMapper.
+
+=============================================================================================
+Example of Spring JdbcTemplate
+=============================================================================================
+1. create table in mysql
+2. Employee.java
+
+This class contains 3 properties with constructors and setter and getters.
+---------------------------------------------------------------------------------------------
+package com.cranes;  
+  
+public class Employee 
+{  
+private int id;  
+private String name;  
+private float salary;  
+//no-arg and parameterized constructors  
+//getters and setters  
+}  
+
+
+3.EmployeeDao.java
+It contains one property jdbcTemplate and three methods saveEmployee(), updateEmployee and deleteEmployee().
+
+package com.cranes;  
+import org.springframework.jdbc.core.JdbcTemplate;  
+  
+public class EmployeeDao {  
+private JdbcTemplate jdbcTemplate;  
+  
+public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {  
+    this.jdbcTemplate = jdbcTemplate;  
+}  
+  
+public int saveEmployee(Employee e){  
+    String query="insert into employee values(  
+    '"+e.getId()+"','"+e.getName()+"','"+e.getSalary()+"')";  
+    return jdbcTemplate.update(query);  
+}  
+public int updateEmployee(Employee e){  
+    String query="update employee set   
+    name='"+e.getName()+"',salary='"+e.getSalary()+"' where id='"+e.getId()+"' ";  
+    return jdbcTemplate.update(query);  
+}  
+public int deleteEmployee(Employee e){  
+    String query="delete from employee where id='"+e.getId()+"' ";  
+    return jdbcTemplate.update(query);  
+}  
+  
+}  
+
+applicationContext.xml
+The DriverManagerDataSource is used to contain the information about the database such as driver class name, connnection URL, username and password.
+
+There are a property named datasource in the JdbcTemplate class of DriverManagerDataSource type. So, we need to provide the reference of DriverManagerDataSource object in the JdbcTemplate class for the datasource property.
+
+Here, we are using the JdbcTemplate object in the EmployeeDao class, so we are passing it by the setter method but you can use constructor also.
+
+<?xml version="1.0" encoding="UTF-8"?>  
+<beans  
+    xmlns="http://www.springframework.org/schema/beans"  
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
+    xmlns:p="http://www.springframework.org/schema/p"  
+    xsi:schemaLocation="http://www.springframework.org/schema/beans   
+http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">  
+  
+<bean id="ds" class="org.springframework.jdbc.datasource.DriverManagerDataSource">  
+<property name="driverClassName" value="com.mysql.jdbc.Driver" />  
+<property name="url" value="jdbc:mysql://localhost:3306/pgdfj29ev" />  
+<property name="username" value="root" />  
+<property name="password" value="root" />  
+</bean>  
+  
+<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">  
+<property name="dataSource" ref="ds"></property>  
+</bean>  
+  
+<bean id="edao" class="com.cranes.EmployeeDao">  
+<property name="jdbcTemplate" ref="jdbcTemplate"></property>  
+</bean>  
+  
+</beans>  
+
+Test.java
+This class gets the bean from the applicationContext.xml file and calls the saveEmployee() method. You can also call updateEmployee() and deleteEmployee() method by uncommenting the code as well.
+
+package com.cranes;  
+  
+import org.springframework.context.ApplicationContext;  
+import org.springframework.context.support.ClassPathXmlApplicationContext;  
+public class Test {  
+  
+public static void main(String[] args) {  
+    ApplicationContext ctx=new ClassPathXmlApplicationContext("applicationContext.xml");  
+      
+    EmployeeDao dao=(EmployeeDao)ctx.getBean("edao");  
+    int status=dao.saveEmployee(new Employee(102,"Anuvedya",35000));  
+    System.out.println(status);  
+          
+    /*int status=dao.updateEmployee(new Employee(102,"Sultana",15000)); 
+    System.out.println(status); 
+    */  
+          
+    /*Employee e=new Employee(); 
+    e.setId(102); 
+    int status=dao.deleteEmployee(e); 
+    System.out.println(status);*/  
+      
+}  
+  
+}  
+
+==============================================================================================
+			CRUD Operation with JdbcTemplate 
+==============================================================================================
+Student.java(Bean class)
+---------------------------
+package com.lpu.model;
+
+public class Student 
+{
+    private int id;
+    private String name;
+    private String contact;
+    private String email;
+
+    public Student() { }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getContact() {
+        return contact;
+    }
+
+    public void setContact(String contact) {
+        this.contact = contact;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+    
+    
+    
+}
+
+StudentDao.java(Java Class)
+-------------------------------
+package com.lpu.controller;
+
+import com.lpu.model.Student;
+import org.springframework.jdbc.core.JdbcTemplate;
+
+public class StudentDao 
+{
+    private JdbcTemplate jdbcTemplate;
+
+    public void setJdbcTemplate(JdbcTemplate jdbcTemplate) 
+    {
+        this.jdbcTemplate = jdbcTemplate;
+    }
+    
+    public int saveRecord(Student record)
+    {
+        String insert="insert into student(name,contact,email)values('"+record.getName()+"','"+record.getContact()+"','"+record.getEmail()+"')";
+        
+        return jdbcTemplate.update(insert);
+    }
+    public int updateRecord(Student updateRecord)
+    {
+        String update="update student set name='"+updateRecord.getName()+"',contact='"+updateRecord.getContact()+"',email='"+updateRecord.getEmail()+"' where id='"+updateRecord.getId()+"'";
+        
+        return jdbcTemplate.update(update);
+    }
+    
+    public int deletRecord(Student deleteRecord)
+    {
+        String delete="delete from student where id='"+deleteRecord.getId()+"'";
+        
+        return jdbcTemplate.update(delete);
+    }
+    
+    
+}
+Now Configure database property in applicationContext.xml file:
+-------------------------------------------------------------------
+<?xml version='1.0' encoding='UTF-8' ?>
+<!-- was: <?xml version="1.0" encoding="UTF-8"?> -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+
+        <bean id="ds" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+            <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+            <property name="url" value="jdbc:mysql://localhost:3306/lpu"/>
+            <property name="username" value="root"/>
+            <property name="password" value="root"/>
+        </bean>
+        
+        <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+            <property name="dataSource" ref="ds"/>
+        </bean>
+        
+        <bean id="dao" class="com.lpu.controller.StudentDao">
+            <property name="jdbcTemplate" ref="jdbcTemplate"/>
+        </bean>
+        
+    
+
+</beans>
+
+Now Create Main class To execute the program:
+-------------------------------------------------
+package com.lpu.controller;
+
+import com.lpu.model.Student;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import java.util.*;
+
+public class JdbcTemplateExample 
+{
+    public static void main(String[] args)
+    {
+        ApplicationContext context=new ClassPathXmlApplicationContext("applicationContext.xml");
+        
+        StudentDao dao=context.getBean("dao",StudentDao.class);
+        List<Student> allRecords=dao.getAllStudentRecords();//fetch all records from the table
+        for(Student record:allRecords)
+        {
+            System.out.println("ID :"+record.getId()+" Name :"+record.getName()+" Contact :"+record.getContact()+" Email :"+record.getEmail());
+        }
+        
+//        Student st=new Student();
+//        st.setId(1);
+////        st.setName("Tharun Kumar");
+////        st.setContact("2374647647");
+////        st.setEmail("tk@yahoo.com");
+//        
+//        //  int status=dao.saveRecord(st);
+//       // int status=dao.updateRecord(st);
+//       int status=dao.deletRecord(st);
+//        if(status>0)
+//        {
+//            System.out.println("Record has been deleted in table.");
+//        }
+//        else
+//            {
+//            System.out.println("Record has not been deleted in table.");
+//        }
+    }
+}
+
+
+=============================================================================================
+New Project :StudentManagementSystemUsingSpringBoot
+==========================================================
+package
+com.lpu.model
+package com.lpu.model;
+
+public class Student 
+{
+    private int id;
+    private String name;
+    private String contact;
+    private String email;
+
+    public Student() { }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getContact() {
+        return contact;
+    }
+
+    public void setContact(String contact) {
+        this.contact = contact;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+    
+    
+    
+    
+}
+
+Create com.lpu.dao package
+----------------------------
+package com.lpu.dao;
+
+import com.lpu.model.Student;
+import org.springframework.jdbc.core.JdbcTemplate;
+import java.util.*;
+import org.springframework.jdbc.core.RowMapper;
+import java.sql.*;
+
+public class StudentDao 
+{
+    private JdbcTemplate jdbcTemplate;
+
+    public void setJdbcTemplate(JdbcTemplate jdbcTemplate) 
+    {
+        this.jdbcTemplate = jdbcTemplate;
+    }
+    
+    public int saveRecord(Student record)
+    {
+        String insert="insert into student(name,contact,email)values('"+record.getName()+"','"+record.getContact()+"','"+record.getEmail()+"')";
+        
+        return jdbcTemplate.update(insert);
+    }
+    public int updateRecord(Student updateRecord)
+    {
+        String update="update student set name='"+updateRecord.getName()+"',contact='"+updateRecord.getContact()+"',email='"+updateRecord.getEmail()+"' where id='"+updateRecord.getId()+"'";
+        
+        return jdbcTemplate.update(update);
+    }
+    
+    public int deletRecord(Student deleteRecord)
+    {
+        String delete="delete from student where id='"+deleteRecord.getId()+"'";
+        
+        return jdbcTemplate.update(delete);
+    }
+    
+    public List<Student> getAllStudentRecords()
+    {
+        return jdbcTemplate.query("select * from student",new RowMapper<Student>()
+        {
+            public Student mapRow(ResultSet rs,int row)throws SQLException
+            {
+                Student st=new Student();
+                st.setId(rs.getInt("id"));
+                st.setName(rs.getString("name"));
+                st.setContact(rs.getString("contact"));
+                st.setEmail(rs.getString("email"));
+                
+                return st;
+            }
+        }
+        
+        
+        );
+    }
+    
+}
+
+Create Controller class under com.lpu.controller package:
+---------------------------------------------------------
+package com.lpu.controller;
+
+import com.lpu.dao.StudentDao;
+import com.lpu.model.Student;
+
+import java.util.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+public class StudentController 
+{
+    @Autowired
+    StudentDao dao;
+    
+    @RequestMapping("/studentform")
+    public String insert(Model m)
+    {
+        m.addAttribute("command",new Student());
+        
+        return "/studentform";
+    }
+    
+    @RequestMapping("/save")
+    public String save(@ModelAttribute("student")Student st)
+    {
+        dao.saveRecord(st);
+        
+        return "redirect:/viewstudent";
+    }
+    @RequestMapping("/viewstudent")
+    public String view(Model m)
+    {
+        List<Student> studentlist=dao.getAllStudentRecords();
+        m.addAllAttributes(studentlist);
+        
+        return "viewstudent";
+    }
+    
+}
+
+StudentForm.jsp under webpages package:
+-------------------------------------------
+<%-- 
+    Document   : StudentForm
+    Created on : 6 Jul, 2023, 4:51:18 PM
+    Author     : Basavaraju
+--%>
+
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"  %>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Student Form</title>
+    </head>
+    <body>
+        <form:form method="post" action="save">
+            <table>
+                <tr>
+                    <td>Student Name</td>
+                    <td><form:input path="name"/></td>
+                </tr>
+                 <tr>
+                    <td>Student Email</td>
+                    <td><form:input path="email"/></td>
+                </tr>
+                 <tr>
+                    <td>Student Contact</td>
+                    <td><form:input path="contact"/></td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="submit" value="Save"/>
+                    </td>
+                </tr>
+            </table>
+        </form:form>
+    </body>
+</html>
+
+configuration of databases in dispatcher-servlet.xml file:
+dispatcher-servlet.xml
+--------------------------
+<?xml version='1.0' encoding='UTF-8' ?>
+<!-- was: <?xml version="1.0" encoding="UTF-8"?> -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+
+    <bean id="ds" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://localhost:3306/lpu"/>
+        <property name="username" value="root"/>
+        <property name="password" value="root"/>
+    </bean>
+        
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource" ref="ds"/>
+    </bean>
+        
+    <bean id="dao" class="com.lpu.controller.StudentDao">
+        <property name="jdbcTemplate" ref="jdbcTemplate"/>
+    </bean>
+        
+
+</beans>
+
+
+Web.xml configuration :
+----------------------------
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+   
+    <servlet>
+        <servlet-name>dispatcher</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>dispatcher</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+    <session-config>
+        <session-timeout>
+            30
+        </session-timeout>
+    </session-config>
+    
+</web-app>
+
+on the rest next day:
+continue....
+
